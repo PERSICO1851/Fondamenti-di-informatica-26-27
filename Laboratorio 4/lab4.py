@@ -193,8 +193,15 @@ check_test(remove_avg, [], [])
 # Usare UN SOLO ciclo; non usare sorted(), sort() o is_sorted().
 # Esempi: [1, 3, 2]  ->True; [1, 2, 3] -> False.
 def is_sorted_half(a):
-    
-    return
+    direz = 0
+    cambi = []
+    for i in range(0,len(a)-1):
+        if a[i] > a[i+1]:
+            cambi.append(True)
+        else:
+            cambi.append(False)
+    value = True if cambi.count(False) == 1 or cambi.count(True) == 1 else False
+    return value
 
 check_test(is_sorted_half, False, [1, 2, 3])
 check_test(is_sorted_half, False, [3, 2, 1])
