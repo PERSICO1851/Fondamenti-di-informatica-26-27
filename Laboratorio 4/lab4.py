@@ -195,12 +195,15 @@ check_test(remove_avg, [], [])
 def is_sorted_half(a):
     direz = 0
     cambi = []
-    for i in range(0,len(a)-1):
-        if a[i] > a[i+1]:
-            cambi.append(True)
-        else:
-            cambi.append(False)
-    value = True if cambi.count(False) == 1 or cambi.count(True) == 1 else False
+    if len(a) >= 3:
+        for i in range(0,len(a)-1):
+            if a[i] > a[i+1]:
+                cambi.append(True)
+            else:
+                cambi.append(False)
+        value = True if cambi.count(False) == 1 or cambi.count(True) == 1 else False
+    else:
+        value = "Lista Non maggiore di 3"
     return value
 
 check_test(is_sorted_half, False, [1, 2, 3])
