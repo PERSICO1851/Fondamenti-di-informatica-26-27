@@ -14,7 +14,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-
+Path = "/Users/persicovincenzo/Downloads/Simulazione01-test/06-file"
 # Esegue un test e controlla il risultato
 def check_test(func: Callable, expected: Any, *args: List[Any]):
     func_str = func.__name__
@@ -41,7 +41,12 @@ def load_file(filename: str) -> str:
 # e' presente nel file. La ricerca ignora la distinzione tra maiuscole e minuscole,
 # e la punteggiatura.
 def search_word(filename: str, word: str) -> int:
-    pass
+    f = load_file(f"{Path}/{filename}")
+    r = ""
+    for y in f:
+        if y.isalnum() or y.isspace():
+            r += y.lower()
+    return r.split().count(word)
 
 
 # Dato il nome di un file di testo, si ritorna una "tabella" formata da una
@@ -49,14 +54,26 @@ def search_word(filename: str, word: str) -> int:
 # (chiavi nel dizionario) e le righe contengono i valori, tutti separati da
 # spazi.
 def load_table(filename: str) -> List[Dict[str, str]]:
-    pass
+    f = load_file(f"{Path}/{filename}")
+    f_spl = [x.strip().split(" ") for x in f.splitlines()]
+    print(f_spl)
+    lista = []
+    for i in range(1,len(f_spl)):
+        lista.append({f_spl[0][0]: f_spl[i][0],f_spl[0][-1]: f_spl[i][-1]})
+    return lista
 
 
 # Caricare una tabella in modo simile al precente. In questo caso però, i valori
 # che rappresentano numeri interi vanno convertiti in interi e non lasciati come
 # stringhe.
 def load_data(filename: str) -> List[Dict[str, Union[int, str]]]:
-    pass
+    f = load_file(f"{Path}/{filename}")
+    f_spl = [x.strip().split(" ") for x in f.splitlines()]
+    print(f_spl)
+    lista = []
+    for i in range(1,len(f_spl)):
+        lista.append({f_spl[0][0]: f_spl[i][0],f_spl[0][-1]: int(f_spl[i][-1])})
+    return lista
 
 
 # Caricare una tabella in modo simile al precente. In questo caso però, i valori
