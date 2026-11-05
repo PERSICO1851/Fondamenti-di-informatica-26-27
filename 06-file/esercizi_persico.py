@@ -56,7 +56,6 @@ def search_word(filename: str, word: str) -> int:
 def load_table(filename: str) -> List[Dict[str, str]]:
     f = load_file(f"{Path}/{filename}")
     f_spl = [x.strip().split(" ") for x in f.splitlines()]
-    print(f_spl)
     lista = []
     for i in range(1,len(f_spl)):
         lista.append({f_spl[0][0]: f_spl[i][0],f_spl[0][-1]: f_spl[i][-1]})
@@ -69,7 +68,6 @@ def load_table(filename: str) -> List[Dict[str, str]]:
 def load_data(filename: str) -> List[Dict[str, Union[int, str]]]:
     f = load_file(f"{Path}/{filename}")
     f_spl = [x.strip().split(" ") for x in f.splitlines()]
-    print(f_spl)
     lista = []
     for i in range(1,len(f_spl)):
         lista.append({f_spl[0][0]: f_spl[i][0],f_spl[0][-1]: int(f_spl[i][-1])})
@@ -80,15 +78,34 @@ def load_data(filename: str) -> List[Dict[str, Union[int, str]]]:
 # sono separati da virgole e ci posso essere valori non presenti (due virgole
 # consecutive). I valori mancanti devono essere aggiunti se `empties==True` come
 # None, oppure essere omessi.
+#CHE CAZZO DI CASINO STO ROBO
 def load_csv(filename: str, empties: bool) -> List[Dict[str, Union[int, str, None]]]:
-    pass
+    f = load_file(f"{Path}/{filename}")
+    f_spl = [x.split(",") for x in f.splitlines()]
+    f_spl = [[None if x == "" else int(x) if x.isdigit() else x for x in sottolista] for sottolista in f_spl]
+    lista = [{f_spl[0][0]: f_spl[i][0] ,f_spl[0][1]: f_spl[i][1] ,f_spl[0][2]: f_spl[i][2] ,f_spl[0][3]:f_spl[i][3]} for i in range(1,len(f_spl))]
+    if empties == False:
+        for y in lista:
+            for chiave in list(y):
+                if y[chiave] is None:
+                    del y[chiave]
+    return lista
 
 
 # Dato una file CSV, che si carica con la funzione precedente, ritornare un
 # dizionario con la somma dei valori di ogni colonna numerica.
 # Usare la funzione load_csv(), con la variabile empties data a vostra scelta.
 def column_stats(filename: str) -> Dict[str, Tuple[str, int]]:
-    pass
+    dizio = [{key: val for key,val in diz.items() if isinstance(val,int)} for diz in load_csv(filename,True)]
+    diz = {}
+    for y in dizio:
+        for key,value in y.items():
+            if key in diz:
+                diz[key] += value
+            else:
+                diz[key] = value
+
+    return diz
 
 
 # Test funzioni
