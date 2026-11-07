@@ -36,7 +36,17 @@ def verifica(nome, funzione, atteso, *argomenti):
 # un separatore: per esempio "Ciao,mondo!" contiene due parole.
 # Testo senza parole -> {}. Non modificare l'input.
 def word_frequency(testo: str) -> dict[str, int]:
-    pass
+    lista = []
+    word = ""
+    for y in testo:
+        if not y.isalnum():
+            lista.append(word)
+            word = ""
+        else:
+            word = word + y
+    #print(lista)
+    diz = {key.lower():lista.count(key) for key in lista if key != ""}
+    return diz
 
 # ======================================================================
 # number_frequency
@@ -44,7 +54,10 @@ def word_frequency(testo: str) -> dict[str, int]:
 # lista crescente dei numeri con frequenza massima (tutti in caso
 # di parita'). Stringa vuota -> [].
 def number_frequency(testo: str) -> list[int]:
-    pass
+    conteggi = [int(x) for x in testo.split()]
+    diz = {key:conteggi.count(key) for key in conteggi}
+    lista = sorted([key for key in diz.keys() if diz[key] == max(diz.values())])
+    return lista
 
 # ======================================================================
 # update_dict
@@ -52,7 +65,14 @@ def number_frequency(testo: str) -> list[int]:
 # Se una chiave appare piu' volte, prevale il valore dell'ultimo
 # dizionario. Non modificare gli input. Lista vuota -> {}.
 def update_dict(dizionari: list[dict]) -> dict:
-    pass
+    diz = {}
+    for y in dizionari:
+        for key,value in y.items():
+            if key in diz and value > diz[key]:
+                diz[key] = value
+            else:
+                diz[key] = value
+    return diz
 
 # ======================================================================
 # merge_dict
@@ -60,7 +80,14 @@ def update_dict(dizionari: list[dict]) -> dict:
 # con tutti i valori incontrati, nell'ordine dei dizionari.
 # Lista vuota -> {}. Non modificare gli input.
 def merge_dict(dizionari: list[dict]) -> dict:
-    pass
+    diz = {}
+    for y in dizionari:
+        for key,value in y.items():
+            if key not in diz:
+                diz[key] = [value]
+            else:
+                diz[key].append(value)
+    return diz
 
 # ======================================================================
 # conta_righe_non_vuote
@@ -68,23 +95,19 @@ def merge_dict(dizionari: list[dict]) -> dict:
 # di righe che contengono almeno un carattere diverso dagli spazi.
 # Ignorare righe vuote e righe composte solo da spazi/tab.
 # File vuoto -> 0.
+PATH = '/Users/persicovincenzo/Downloads/Simulazione01-test/Laboratorio5/'
 def conta_righe_non_vuote(percorso: str) -> int:
-    pass
+    with open(percorso) as f:
+        righe = sum(1 for x in f if x.split() != [])
+    return righe
 
-# FACOLTATIVI / PER CASA
-# salva_parole_frequenti(percorso_in, percorso_out, soglia):
-#   leggere parole come in file_frequency, scrivere in ordine alfabetico
-#   le parole con frequenza >= soglia, una per riga nel formato
-#   parola,frequenza; restituire il numero di parole scritte.
-
-def salva_parole_frequenti(percorso_in: str, percorso_out: str, soglia: int) -> int:
-    pass
 
 # intersect_dict(dizionari): assumere una lista NON vuota di dizionari;
 #   tenere solo le chiavi comuni a tutti, associando la lista dei valori
 #   nell'ordine dei dizionari. Non modificare gli input.
 def intersect_dict(dizionari: list[dict]) -> dict:
-    pass
+    diz = {key : value for key,value in merge_dict(dizionari).items() if len(value) != 1}
+    return diz
 
 # ======================================================================
 # file_frequency
@@ -93,8 +116,21 @@ def intersect_dict(dizionari: list[dict]) -> dict:
 # maiuscole/minuscole. Usare strip() e lower(). File vuoto -> {}.
 # Precondizione: tutte le righe sono parole non vuote.
 def file_frequency(percorso: str) -> dict[str, int]:
-    pass
+    with open(percorso) as f:
+        parole = [x.strip().lower() for x in f]
+    diz = {key:parole.count(key) for key in list(set(parole))}
+    return diz
 
+
+# FACOLTATIVI / PER CASA
+# salva_parole_frequenti(percorso_in, percorso_out, soglia):
+#   leggere parole come in file_frequency, scrivere in ordine alfabetico
+#   le parole con frequenza >= soglia, una per riga nel formato
+#   parola,frequenza; restituire il numero di parole scritte.
+
+def salva_parole_frequenti(percorso_in: str, percorso_out: str, soglia: int) -> int:
+    #non ha la verifica, fatelo come esercizio per casa ;D forza roma!
+    pass
 
 # ======================================================================
 # FACOLTATIVO DOPO LA LEZIONE 10 — load_table
@@ -104,7 +140,13 @@ def file_frequency(percorso: str) -> dict[str, int]:
 # Non convertire i numeri. File con sola intestazione -> [].
 # Esempio: nome,voto / Harry,25 -> [{'nome':'Harry','voto':'25'}].
 def load_table(percorso: str) -> list[dict[str, str]]:
-    pass
+    with open(percorso) as f:
+        f_l = f.read().splitlines()
+        a,b = f_l[0].split(",")
+        lista = [{a:x.split(",")[0],b:x.split(",")[1]} for x in f_l]
+
+
+    return lista[1:]
 
 if __name__ == '__main__':
     verifica('word_frequency', word_frequency, {'harry': 2, 'e': 2, 'ron': 1, 'hermione': 1}, 'Harry e Ron, Harry e Hermione!')
@@ -118,11 +160,11 @@ if __name__ == '__main__':
     verifica('update_dict', update_dict, {}, [])
     verifica('merge_dict', merge_dict, {'a':[1,3],'b':[2],'c':[4]}, [{'a':1,'b':2},{'a':3,'c':4}])
     verifica('merge_dict', merge_dict, {}, [])
-    verifica('file_frequency', file_frequency, {'harry':2,'ron':2,'luna':1}, 'parole_l05.txt')
-    verifica('file_frequency', file_frequency, {}, 'parole_vuote_l05.txt')
-    verifica('conta_righe_non_vuote', conta_righe_non_vuote, 4, 'righe_l05.txt')
-    verifica('conta_righe_non_vuote', conta_righe_non_vuote, 0, 'parole_vuote_l05.txt')
+    verifica('file_frequency', file_frequency, {'harry':2,'ron':2,'luna':1}, PATH + 'parole_l05.txt')
+    verifica('file_frequency', file_frequency, {}, PATH + 'parole_vuote_l05.txt')
+    verifica('conta_righe_non_vuote', conta_righe_non_vuote, 4, PATH + 'righe_l05.txt')
+    verifica('conta_righe_non_vuote', conta_righe_non_vuote, 0, PATH + 'parole_vuote_l05.txt')
     # Esempio di output facoltativo da verificare dopo l'implementazione:
-    # salva_parole_frequenti('parole_l05.txt', 'frequenti_l05.txt', 2)
+    salva_parole_frequenti(PATH + 'parole_l05.txt',PATH+ 'frequenti_l05.txt', 2)
     # Facoltativo dopo L10:
-    # verifica('load_table', load_table, [{'nome':'Harry','voto':'25'}, {'nome':'Hermione','voto':'30'}], 'tabella_l05.txt')
+    verifica('load_table', load_table, [{'nome':'Harry','voto':'25'}, {'nome':'Hermione','voto':'30'}],PATH + 'tabella_l05.txt')

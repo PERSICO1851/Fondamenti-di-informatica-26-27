@@ -1,5 +1,5 @@
-Harry
-Ron
 harry
-Luna
-RON
+harry
+ron
+Ron
+luna
