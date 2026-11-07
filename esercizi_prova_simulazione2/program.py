@@ -15,9 +15,9 @@ Il voto finale e' la somma dei punteggi dei problemi risolti.
 Attenzione! DEBUG=True nel grade.py per visualizzare la stack trace degli errori.
 """
 
-nome       = "NOME"
-cognome    = "COGNOME"
-matricola  = "MATRICOLA"
+nome       = "LAZIO"
+cognome    = "MERDA"
+matricola  = "676767"
 
 # ----------------------------------- EX.A ----------------------------------- #
 
@@ -45,8 +45,21 @@ e la funzione deve ritornare 5.
 """
 
 def esA(file_in: str, file_out: str) -> int:
-    pass
+    with open(file_in) as f:
+        f_l = [parola for riga in f for parola in riga.split()]
+    print(f_l)
+    p_lette = len(f_l)
+    f_l = list(set(f_l))
+    f_l.sort()
+    with open(file_out,'w') as f:
+        for y in f_l:
+            f.write(y+"\n")
+        
+    return p_lette
     # completa il codice della funzione
+PATH = "/Users/persicovincenzo/Downloads/Simulazione01-test/esercizi_prova_simulazione2/"
+
+print(esA(PATH +'esA/input_1.txt', PATH + 'esA/output_1.txt'))  # 5
 
 
 # print(esA('esA/input_1.txt', 'esA/output_1.txt'))  # 5
@@ -70,11 +83,14 @@ la funzione deve ritornare [6, 15, 24].
 """
 
 def esB(input_filename: str) -> list[int]:
-    pass
+    with open(input_filename,'r') as f:
+        lista = [sum([int(x) for x in riga.split()]) for riga in f]
+    print(lista)
+    return lista
     # completa il codice della funzione
 
 
-# print(esB('esB/input_1.txt'))  # [6, 15, 24]
+print(esB('/Users/persicovincenzo/Downloads/Simulazione01-test/esercizi_prova_simulazione2/esB/input_1.txt'))  # [6, 15, 24]
 
 
 # ---------------------------- EOF ---------------------------- #

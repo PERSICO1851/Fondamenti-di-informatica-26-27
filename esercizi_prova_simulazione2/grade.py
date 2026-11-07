@@ -26,9 +26,9 @@ DEBUG = True
 # ----------------------------------- EX. A ----------------------------------- #
 
 def do_esA_tests(ID, expected_count, points):
-    input_file    = f'esA/input_{ID}.txt'
-    output_file   = f'esA/output_{ID}.txt'
-    expected_file = f'esA/expected_{ID}.txt'
+    input_file    = f'/Users/persicovincenzo/Downloads/Simulazione01-test/esercizi_prova_simulazione2/esA/input_{ID}.txt'
+    output_file   = f'/Users/persicovincenzo/Downloads/Simulazione01-test/esercizi_prova_simulazione2/esA/output_{ID}.txt'
+    expected_file = f'/Users/persicovincenzo/Downloads/Simulazione01-test/esercizi_prova_simulazione2/esA/expected_{ID}.txt'
 
     # remove the previous output each time if it is there
     if os.path.exists(output_file):
@@ -73,7 +73,7 @@ def test_esA_3():
 # ----------------------------------- EX. B ----------------------------------- #
 
 def do_esB_tests(ID, expected, points):
-    input_file = f'esB/input_{ID}.txt'
+    input_file = f'/Users/persicovincenzo/Downloads/Simulazione01-test/esercizi_prova_simulazione2/esB/input_{ID}.txt'
     res = program.esB(input_file)
     if res is None:
         raise testlib.NotImplemented()
