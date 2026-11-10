@@ -13,7 +13,9 @@ import program
 ################################################################################
 # %% ---------------------- DEBUG VARIABLE -------------------
 #DEBUG = True    # with    stack trace of errors
-DEBUG = False   # without stack trace of errors
+DEBUG = False  # without stack trace of errors
+
+PATH = "/Users/persicovincenzo/Downloads/Simulazione01-test/simulazione 2/"
 
 #############################################################################
 # %% ---------------------- TEST SECTION -------------------
@@ -28,7 +30,7 @@ def test_personal_data_entry():
 ###########################################################################################################################
 
 def do_func1_tests(ID, expected):
-    input_filename  = f'txt/in_0{ID}.txt'
+    input_filename  = f'{PATH}txt/in_0{ID}.txt'
     res = program.func1(input_filename)
     testlib.checkList(res, expected)
     return 1.5
@@ -57,8 +59,8 @@ def test_func1_4():
 ###########################################################################################################################
 
 def do_func2_tests(ID1, ID2, expected):
-    input_filename  = f'txt/in_0{ID1}.txt'
-    input_filename_b  = f'txt/in_0{ID2}.txt'
+    input_filename  = f'{PATH}txt/in_0{ID1}.txt'
+    input_filename_b  = f'{PATH}txt/in_0{ID2}.txt'
     res = program.func2(input_filename, input_filename_b)
     testlib.checkList(res, expected)
     return 1.5
@@ -95,8 +97,8 @@ def test_func2_4():
 ###########################################################################################################################
 
 def do_func3_tests(ID, a_list, listi, expected):
-    output_filename = f'txt/out_0{ID}.txt'
-    expected_filename = f'txt/exp_0{ID}.txt'
+    output_filename = f'{PATH}txt/out_0{ID}.txt'
+    expected_filename = f'{PATH}txt/exp_0{ID}.txt'
     res = program.func3(a_list, listi, output_filename)
     testlib.check_text_file(output_filename, expected_filename)
     if res != expected:
@@ -167,9 +169,9 @@ def test_func3_4():
 
 
 def do_func4_tests(ID, expected, score=2):
-    input_file = f'func4/func4_test{ID}.txt'
-    output_file= f'func4/func4_out{ID}.txt'
-    expected_file=f'func4/func4_exp{ID}.txt'
+    input_file = f'{PATH}func4/func4_test{ID}.txt'
+    output_file= f'{PATH}func4/func4_out{ID}.txt'
+    expected_file=f'{PATH}func4/func4_exp{ID}.txt'
     res = program.func4(input_file, output_file)
     if res == None:
         raise testlib.NotImplemented()
@@ -212,9 +214,9 @@ def test_func4_3():
 
 ###########################################################################################################################
 def do_func5_tests(ID, length, expected):
-    input_filename  = f'func5/func5_test{ID}.txt'
-    output_filename = f'func5/func5_out{ID}.txt'
-    expected_filename = f'func5/func5_exp{ID}.txt'
+    input_filename  = f'{PATH}func5/func5_test{ID}.txt'
+    output_filename = f'{PATH}func5/func5_out{ID}.txt'
+    expected_filename = f'{PATH}func5/func5_exp{ID}.txt'
     res = program.func5(input_filename, output_filename, length)
     if res != expected:
         my_print(f'''{'*'*50}\n[ERROR] Il numero di righe ritornato è sbagliato! / The number of written rows is incorrect!\nReturned={res}, expected={expected}.\n{'*'*50}''')

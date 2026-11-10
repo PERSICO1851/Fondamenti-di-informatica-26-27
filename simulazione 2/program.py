@@ -15,9 +15,9 @@ Per superare la simulazione e' sufficiente ottenere un punteggio maggiore o ugua
 Per commentare/decommentare il codice velocemente usate Control + 1 !
 """
 
-nome       = "NOME"
-cognome    = "COGNOME"
-matricola  = "MATRICOLA"
+nome       = "Ronaldo"
+cognome    = "borrello"
+matricola  = "24542555"
 
 ################################################################################
 ################################################################################
@@ -52,7 +52,11 @@ esempi:
 '''
 
 def func1(file_in : str) -> list[str]:
-    pass
+    with open(file_in) as f:
+        letto = f.read()
+        lista = [("".join(c if c.isalpha() else " " for c in y)).split() for y in letto.splitlines()]
+        lista = sorted(list(set([elemento.lower() for lista_annidata in lista for elemento in lista_annidata])))
+    return lista
 
 
 
@@ -87,7 +91,22 @@ la funzione restituisce
 
 
 def func2(file_in_a : str, file_in_b : str) -> list[str]:
-    pass
+    with open(file_in_a) as f:
+        lista_a = []
+        for y in f.read().splitlines():
+            for i in y:
+                if not i.isspace():
+                    lista_a.append(i)
+    with open(file_in_b) as f:
+        lista_b = []
+        for y in f.read().splitlines():
+            for i in y:
+                if not i.isspace():
+                    lista_b.append(i)
+    lista_a2 = sorted(list(set([x for x in lista_a if x not in lista_b])))
+    lista_b2 = sorted(list(set([x for x in lista_b if x not in lista_a])))
+    lista = [*lista_a2,*lista_b2]
+    return lista 
     
 
 
@@ -133,7 +152,14 @@ zotero zuu zoo
 '''
 
 def func3(lists : list[list[str]], listi : list[list[int]], out : str) -> int:
-    pass
+    conteggio = 0
+    with open(out,'w') as f:
+        for i in range(len(lists)):
+            for y in listi[i]:
+                f.write(lists[i][y] + " ")
+                conteggio += 1
+            f.write('\n')
+    return conteggio
     
     
     
@@ -183,7 +209,16 @@ e ritornare il valore 6.
 
 
 def func4(input_file : str, output_file : str) -> int:
-    pass
+    conteggio = 0
+    with open(input_file) as f:
+        letto = f.read()
+        lista = [("".join(c if c.isalpha() else " " for c in y)).split() for y in letto.splitlines()]
+        lista = sorted([elemento for lista_annidata in lista for elemento in lista_annidata],key= lambda x:(len(x),x.lower(),x))
+    with open(output_file,'w') as f:
+        for y in lista:
+            f.write(y+" ")
+            conteggio += 1
+    return conteggio
 
 
 
@@ -222,7 +257,7 @@ cat bat    rat
 Condor baT
 Cat cAr CAR
 
-la funzione func5('func5_test1.txt', 'func5_out1.txt', 3) dovrà scrivere
+la funzione func5('func5_test1.txt', '  ', 3) dovrà scrivere
 nel file 'func5_out1.txt' le seguenti 3 righe:
 baT bat
 CAR cAr Cat cat
@@ -233,8 +268,36 @@ e ritornare il valore 7.
 """
 
 
-def func5(input_filename : str, output_filename : str, length : int) -> int:
-    pass
+def func5(input_filename, output_filename, length):
+    conteggio = 0
+    
+    with open(input_filename, 'r', encoding='utf-8') as f:
+        letto = f.read()
+    
+    lista = [("".join(c if c.isalpha() else " " for c in y)).split() for y in letto.splitlines()]
+    lista = [elemento for lista_annidata in lista for elemento in lista_annidata]
+    
+
+    lista = [x for x in lista if len(x) == length]
+    
+    lista = sorted(lista, key=lambda x: (x.lower(), x))
+    with open(output_filename, 'w', encoding='utf-8') as f:
+        if lista:
+            current = [lista[0]]
+            conteggio += 1
+            
+            for word in lista[1:]:
+                if word[0].lower() == current[0][0].lower():
+                    current.append(word)
+                else:
+                    f.write(" ".join(current) + "\n")
+                    current = [word]
+                conteggio += 1
+                
+            f.write(" ".join(current) + "\n")
+            
+    return conteggio
+
 
 
 
