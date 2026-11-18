@@ -139,10 +139,11 @@ def img_quantize(img_in: str, img_out: str) -> None:
 # ESERCIZIO 6 - img_invert_half (6 punti)
 # Leggere un PNG con larghezza pari e salvare una nuova immagine
 # scambiando la meta' sinistra con la meta' destra di ogni riga.
-# Esempio: [A,B,C,D] -> [C,D,A,B].
+# Esempio: [A,B,C,D] -> [C,D,A,B]. [inizio.fine.passo]
 def img_invert_half(img_in: str, img_out: str) -> None:
     img1 = images.load(img_in)
-    img2 = [[(c,d,a,b) for (a,b,c,d) in x] for x in img1]
+    meta = len(img1) // 2
+    img2 = [riga[meta:] + riga[:meta] for riga in img1]
     images.save(img2,img_out)
     pass
 
@@ -152,6 +153,9 @@ def img_invert_half(img_in: str, img_out: str) -> None:
 # in ogni riga, il primo pixel diventa l'ultimo e viceversa.
 # Esempio: [A,B,C,D] -> [D,C,B,A].
 def img_reflect_horizontal(img_in: str, img_out: str) -> None:
+    img1 = images.load(img_in)
+    img2 = [riga[::-1] for riga in img1]
+    images.save(img2,img_out)
     pass
 
 
@@ -160,13 +164,19 @@ def img_reflect_horizontal(img_in: str, img_out: str) -> None:
 # senza modificare quella originale.
 # Esempio: [[1,2,3],[4,5,6]] -> [[1,4],[2,5],[3,6]].
 def transpose(matrice: list[list]) -> list[list]:
-    pass
+    colonna = len(matrice[0])
+    matrix = [[x[i] for x in matrice] for i in range(colonna)]
+    return matrix
 
 
 # ESERCIZIO 9 - img_rotate_right_and_flip_v (facoltativo)
 # Leggere un PNG, ruotarlo di 90 gradi in senso orario e riflettere
 # il risultato rispetto all'asse verticale. Salvare in img_out.
 def img_rotate_right_and_flip_v(img_in: str, img_out: str) -> None:
+    img1 = images.load(img_in)
+    colonna = len(img1[0])
+    matrix = [[x[i] for x in img1] for i in range(colonna)]
+    images.save(matrix,img_out) 
     pass
 
 
@@ -178,7 +188,17 @@ def img_rotate_right_and_flip_v(img_in: str, img_out: str) -> None:
 # Per ciascun pixel (R,G,B), usare per tutti i canali il valore intero
 # ottenuto da 0.2126*R + 0.7152*G + 0.0722*B.
 def img_grayscale(img_in: str, img_out: str):
+    img1 = images.load(img_in)
+    img2 = []
+    for y in img1:
+        riga = []
+        for R,G,B in y:
+            grigio = int(0.2126*R + 0.7152*G + 0.0722*B)
+            riga.append([grigio,grigio,grigio])
+        img2.append(riga)
+    images.save(img2,img_out)
     pass
+img_grayscale("img1.png", "out_grayscale.png")
 
 
 # ESERCIZIO 11 - img_circle (facoltativo)
@@ -187,8 +207,17 @@ def img_grayscale(img_in: str, img_out: str):
 # Considerare il centro del pixel (colonna,riga) in
 # (colonna+0.5, riga+0.5).
 def img_circle(img_in: str, x: float, y: float, r: float, c: tuple, img_out: str):
+    img1 = images.load(img_in)
+    colonne = len(img1[0])
+    righe = len(img1)
+    for i in range(righe):
+        for a in range(colonne):
+            distanza = (a-x+0.5)**2 + (i-y+0.5)**2
+            if r**2 >= distanza:
+                img1[i][a] = c
+    images.save(img1,img_out)
     pass
-
+img_circle("img1.png", 100, 100, 25, (255,255,0), "out_circle.png")
 
 
 
