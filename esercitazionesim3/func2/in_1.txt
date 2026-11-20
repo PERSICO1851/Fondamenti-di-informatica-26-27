@@ -1,0 +1,3 @@
+diagonalDOWN 0 255 0 2 3 10
+diagonalUP 255 0 0 12 20 12
+diagonalUP 0 0 255 5 25 8

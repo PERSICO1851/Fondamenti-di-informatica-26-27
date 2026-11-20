@@ -1,0 +1,6 @@
+diagonalDOWN 253 208 186 20 36 3
+diagonalDOWN 231 223 196 12 4 16
+diagonalUP 173 233 190 1 36 19
+diagonalUP 177 111 138 2 13 5
+diagonalUP 171 171 139 6 31 11
+diagonalDOWN 227 91 208 8 13 10
